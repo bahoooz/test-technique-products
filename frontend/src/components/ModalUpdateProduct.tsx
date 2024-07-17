@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-as-const */
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import { ArrowClockwise, PencilSimple } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
 
