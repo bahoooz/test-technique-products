@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <h1>Voici la liste de tous nos produits 😎</h1>
+      <h1 className='text-3xl bg-blue-300 '>Voici la liste de tous nos produits 😎</h1>
       <ListProducts />
       <ModalCreateProduct />
     </>
