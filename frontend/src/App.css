@@ -1,0 +1,28 @@
+#product-card {
+  font-family: "Raleway", sans-serif;
+}
+
+#home h1 {
+  font-family: "Raleway", sans-serif;
+}
+
+#price {
+  font-family: "Poppins", sans-serif;
+}
+
+#checkbox[type="checkbox"] {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+#checkbox[type="checkbox"]:after {
+  content: "✔️";
+  translate: 5% 0;
+  font-size: 20px;
+  display: none;
+}
+
+#checkbox[type="checkbox"]:checked::after {
+  display: block;
+}

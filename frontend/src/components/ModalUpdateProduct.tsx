@@ -1,18 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-as-const */
 import { Box, Button, Modal } from "@mui/material";
+import { ArrowClockwise, PencilSimple } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 export default function ModalUpdateProduct({
   productId,
@@ -30,10 +19,12 @@ export default function ModalUpdateProduct({
     warranty_years: 0,
     available: false,
   });
-  
+
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await fetch(`http://localhost:3000/api/product/getproduct/${productId}`);
+      const res = await fetch(
+        `http://localhost:3000/api/product/getproduct/${productId}`
+      );
       if (!res.ok) {
         return console.log("Erreur lors de la récupération du produit");
       }
@@ -41,7 +32,7 @@ export default function ModalUpdateProduct({
         const productData = await res.json();
         setFormData(productData);
       }
-    }
+    };
 
     fetchProduct();
   }, [productId]);
@@ -76,33 +67,44 @@ export default function ModalUpdateProduct({
 
   return (
     <div>
-      <Button onClick={handleOpen}>Mettre a jour le produit</Button>
+      <button
+        onClick={handleOpen}
+        className="absolute -translate-x-1/2 -translate-y-1/2 top-8 left-8"
+      >
+        <PencilSimple className="hover:text-green-400" size={32} />
+      </button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <form onSubmit={handleSubmit}>
-            <div>
+        <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] bg-white py-20 rounded-xl shadow-xl">
+          <form
+            className="flex flex-col justify-start text-center gap-7 px-16"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex justify-start gap-3 items-center">
               <label htmlFor="name" id="name">
                 Nom produit
               </label>
               <input
+                className="border border-black rounded-md px-2 py-1"
                 required
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
                 type="text"
                 value={formData && formData.name ? formData.name : ""}
+                placeholder="ex : iPhone"
               />
             </div>
-            <div>
+            <div className="flex justify-start gap-3 items-center">
               <label htmlFor="type" id="type">
                 Type
               </label>
               <select
+                className="rounded-md border border-black px-2 py-1"
                 required
                 onChange={(e) =>
                   setFormData({ ...formData, type: e.target.value })
@@ -115,37 +117,45 @@ export default function ModalUpdateProduct({
                 <option value="tablet">Tablet</option>
               </select>
             </div>
-            <div>
+            <div className="flex justify-start gap-3 items-center">
               <label htmlFor="price" id="price">
                 Prix
               </label>
               <input
+                className="border border-black rounded-md px-2 py-1 w-28"
                 onChange={(e) =>
                   setFormData({ ...formData, price: Number(e.target.value) })
                 }
                 required
                 type="number"
                 value={formData && formData.price ? formData.price : ""}
+                placeholder="ex : 300€"
+                min={1}
               />
             </div>
-            <div>
+            <div className="flex justify-start gap-3 items-center">
               <label htmlFor="rating" id="note">
                 Note
               </label>
               <input
+                className="border border-black rounded-md px-2 py-1 w-20"
                 onChange={(e) =>
                   setFormData({ ...formData, rating: Number(e.target.value) })
                 }
                 required
                 type="number"
                 value={formData && formData.rating ? formData.rating : ""}
+                placeholder="1 à 5"
+                min={1}
+                max={5}
               />
             </div>
-            <div>
+            <div className="flex justify-start gap-3 items-center">
               <label htmlFor="warranty_years" id="warranty_years">
-                Années de garanties
+                Année(s) de garantie
               </label>
               <input
+                className="border border-black rounded-md px-2 py-1 w-20"
                 onChange={(e) =>
                   setFormData({
                     ...formData,
@@ -159,21 +169,34 @@ export default function ModalUpdateProduct({
                     ? formData.warranty_years
                     : ""
                 }
+                placeholder="1 à 3"
+                min={1}
+                max={3}
               />
             </div>
-            <div>
+            <div className="flex justify-start gap-3 items-center">
               <label htmlFor="available" id="available">
                 En stock
               </label>
               <input
+                id="checkbox"
+                className="appearance-none border border-black h-8 w-8  checked: rounded-md cursor-pointer"
                 onChange={(e) =>
                   setFormData({ ...formData, available: e.target.checked })
                 }
                 type="checkbox"
-                checked={formData && formData.available ? formData.available : false}
+                checked={
+                  formData && formData.available ? formData.available : false
+                }
               />
             </div>
-            <Button type="submit">Mettre a jour le produit</Button>
+            <button
+              className="bg-green-400 h-12 w-2/3 mx-auto rounded-md text-white flex justify-center items-center gap-2 text-base mt-8"
+              type="submit"
+            >
+              <ArrowClockwise size={22} />
+              Mettre a jour le produit
+            </button>
           </form>
         </Box>
       </Modal>
